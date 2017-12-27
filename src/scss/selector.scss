@@ -1,0 +1,20 @@
+
+$null: 0 none;
+
+// reset
+
+select {
+    display: nth($null, 2);
+}
+
+ul {
+    margin: nth($null, 1);
+    padding: nth($null, 1);
+    list-style: nth($null, 2);
+}
+
+// class selector
+
+.selector {
+    display: inline-block;
+}
