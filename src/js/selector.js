@@ -1,13 +1,10 @@
+/*! 
+ * selector 1.0.0-alpha.1
+ * by _king
+ */
+
 !function(){
-    console.log('hello gulp');
-
-    // class Selector {
-
-    //     constructor() {
-    //     }
-
-    // };
-
+    
     /**
      * @desc DOM 元素属性设置
      * @param {object} dom 页面 DOM 元素

@@ -1,7 +1,10 @@
 const gulp        = require('gulp');
 const sass        = require('gulp-sass');
+const cleanCss    = require('gulp-clean-css');
+const uglify      = require('gulp-uglify');
 const babel       = require('gulp-babel');
 const browserSync = require('browser-sync').create();
+const rename      = require('gulp-rename');
 
 let reload = browserSync.reload;
 
@@ -28,8 +31,20 @@ gulp.task('sass', () => {
         .pipe(browserSync.stream());
 });
 
+// minify css task
+gulp.task('minify-css', () => {
+    return gulp.src('dist/css/selector.css')
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(cleanCss({
+            compatibility: 'ie8'
+        }))
+        .pipe(gulp.dest('dist/css'));
+});
+
 // babel task
-gulp.task('babel', ['sass'], () => {
+gulp.task('babel', () => {
     return gulp.src('src/js/*.js')
         .pipe(babel({
             presets: ['es2015']
@@ -38,10 +53,20 @@ gulp.task('babel', ['sass'], () => {
         .pipe(browserSync.stream());
 });
 
+// uglify task
+gulp.task('uglify', () => {
+    return gulp.src('dist/js/selector.js')
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist/js'));
+});
+
 // watch task
 gulp.task('watch', () => {
-    gulp.watch('src/scss/*.scss', ['sass']);
-    gulp.watch('src/js/*.js', ['babel']);
+    gulp.watch('src/scss/*.scss', ['minify-css', 'sass']);
+    gulp.watch('src/js/*.js', ['uglify','babel']);
     gulp.watch("*.html").on('change', reload);
 });
 

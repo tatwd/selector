@@ -2,15 +2,12 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+/*! 
+ * selector 1.0.0-alpha.1
+ * by _king
+ */
+
 !function () {
-    console.log('hello gulp');
-
-    // class Selector {
-
-    //     constructor() {
-    //     }
-
-    // };
 
     /**
      * @desc DOM 元素属性设置
