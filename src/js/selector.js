@@ -36,67 +36,95 @@
     selector = Array.prototype.slice.call(selector, 0); // 将 DOM 元素转化成数组元素
 
     selector.forEach(item => {
+
         let frag              = document.createDocumentFragment();
         let options           = [];
         let selectedItemIndex = item.options.selectedIndex; // 获取选择项的索引
 
         options = Array.prototype.slice.call(item.options, 0); // 将 options 转化成数组
 
-        // console.log(options)
+        let divSelector    = document.createElement('div');
+        let divSlectedItem = document.createElement('div');
+        let spanText       = document.createElement('span');
+        let ulOptions             = document.createElement('ul');
+        let icon           = document.createElement('i');
 
-        let div  = document.createElement('div');
-        let span = document.createElement('span');
-        let ul   = document.createElement('ul');
-
-        attr(div, {
+        // 设置 div.selector 的属性
+        attr(divSelector, {
             'class': 'selector'
         });
 
-        attr(span, {
+        // 设置 div.selected-item 的属性
+        attr(divSlectedItem, {
             'class': 'selected-item',
-        }).textContent = options[selectedItemIndex].textContent;
+        });
 
-        attr(ul, {
+        // 设置 span.item-text 的属性
+        attr(spanText, {
+            'class': 'item-text'
+        }).textContent = options[selectedItemIndex].textContent
+
+        divSlectedItem.appendChild(spanText);
+
+        // 设置 i.icon-triangle 的属性
+        attr(icon, {
+            'class': 'icon-triangle'
+        });
+
+        divSlectedItem.appendChild(icon);
+
+        attr(ulOptions, {
             'class': 'options'
         });
 
-        // console.log(div);
+        frag.appendChild(divSlectedItem);
 
-        // span.textContent = options[selectedItemIndex].textContent;
-
-        frag.appendChild(span);
-
+        // 遍历选项
         options.forEach(option => {
-            
+
             if(!option.disabled){
                 let li = document.createElement('li');
 
                 // 设置选项的属性
                 attr(li, {
                     'class'     : 'item',
-                    'data-value': option.value
+                    'data-value': option.value,
+                    'data-index': option.index
                 }).textContent = option.textContent;
 
-                ul.appendChild(li);
+                ulOptions.appendChild(li);
             }
         });
 
-        frag.appendChild(ul);
-        div.appendChild(frag);
-        item.parentElement.appendChild(div);
+        // 添加点击选中事件
+        let clicked = false;
+        divSelector.addEventListener('click', event => {
+            let target = event.target || event.srcElement;
+            
+            // 选中项
+            if(target.classList.contains('item')) {
+                let index = target.getAttribute('data-index'); // 获取选中项的索引
 
-        // item.addEventListener('click', event => {
+                item.options.selectedIndex = index; // 为真实的下拉框设置选中项索引
 
-        //     let target = event.target || event.srcElement;
+                spanText.textContent = item.options[index].textContent;
+            }
 
-        //     // let ele = event.currentTarget;
+            // 选中效果，可以自定义
+            if(!clicked) {
+                divSlectedItem.style.backgroundColor = '#f2f2f2';
+                ulOptions.style.display = 'block';
+            } else {
+                divSlectedItem.style.backgroundColor = '#ffffff';
+                ulOptions.style.display = 'none'; 
+            }  
 
-        //     console.log(item.options); // 被选元素索引
+            clicked = !clicked;
+        }, false);
 
-        // }, true);
+        frag.appendChild(ulOptions);
+        divSelector.appendChild(frag);
+        item.parentElement.appendChild(divSelector);
     });
-
-    // console.log(options);
-    
 
 }();

@@ -1,20 +1,102 @@
 
 $null: 0 none;
+$main-size: 15px;
+$box-padding: 8px 10px;
+$selector-width: 160px; // 可以自定义
+
+// mixins
+
+@mixin solid-border($size, $color) {
+    border: $size solid $color;
+}
+
+@mixin all-radius($size) {
+    border-radius: $size;
+}
+
+@mixin set-triangle($size, $color) {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: nth($null, 1);
+    height: nth($null, 1);
+    border: $size solid $color;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+} 
 
 // reset
 
 select {
-    display: nth($null, 2);
+    // display: nth($null, 2);
 }
 
 ul {
     margin: nth($null, 1);
     padding: nth($null, 1);
     list-style: nth($null, 2);
+
 }
 
 // class selector
 
 .selector {
     display: inline-block;
+    position: relative;
+    
+    width: $selector-width; 
+
+    > .selected-item {
+        @include solid-border(1px, #e6e6e6);
+
+        padding: $box-padding;
+        display: block;
+        cursor: pointer;
+        // background-color: #ccc;
+        white-space: nowrap;
+        // width: 100%;
+
+        display: flex;
+        justify-content: space-between;
+
+        .icon-triangle {
+
+            margin-right: 0;
+
+            // 设置三角图标
+            &::after {
+                @include set-triangle(4px, #c66);
+                
+                //position: absolute;
+                //right: 0;
+            }
+        }
+    }
+
+    > .options {
+        @include solid-border(1px, #e6e6e6);
+        @include all-radius(3px);
+
+        border-top: 1px sloid transparent;
+        background-color: #fff;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        //min-width: 200px;
+
+        display: none;
+
+        cursor: pointer;
+
+        > .item {
+            padding: $box-padding;
+
+            &:hover {
+                // opacity: 0.5;
+                background-color: #f2f2f2;
+            }
+        }
+    }
 }
