@@ -29,7 +29,7 @@ $selector-width: 160px; // 可以自定义
 // reset
 
 select {
-    // display: nth($null, 2);
+    display: nth($null, 2);
 }
 
 ul {
@@ -53,23 +53,18 @@ ul {
         padding: $box-padding;
         display: block;
         cursor: pointer;
-        // background-color: #ccc;
         white-space: nowrap;
+        // background-color: #ccc;
         // width: 100%;
 
         display: flex;
         justify-content: space-between;
 
+        // 设置三角图标
         .icon-triangle {
 
-            margin-right: 0;
-
-            // 设置三角图标
             &::after {
                 @include set-triangle(4px, #c66);
-                
-                //position: absolute;
-                //right: 0;
             }
         }
     }
