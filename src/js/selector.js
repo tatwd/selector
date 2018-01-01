@@ -43,7 +43,7 @@
         let divSelector    = document.createElement('div');
         let divSlectedItem = document.createElement('div');
         let spanText       = document.createElement('span');
-        let ulOptions             = document.createElement('ul');
+        let ulOptions      = document.createElement('ul');
         let icon           = document.createElement('i');
 
         // 设置 div.selector 的属性
