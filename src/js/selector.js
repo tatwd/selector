@@ -27,12 +27,11 @@
         return dom;
     };
 
-
-    let selector = document.getElementsByTagName('select');
-
-    selector = Array.prototype.slice.call(selector, 0); // 将 DOM 元素转化成数组元素
-
-    selector.forEach(item => {
+    /**
+     * @desc 创建一个单选下拉框
+     * @param {object} item 
+     */
+    let createSimpleSelector = item => {
 
         let frag              = document.createDocumentFragment();
         let options           = [];
@@ -69,12 +68,12 @@
         });
 
         divSlectedItem.appendChild(icon);
+        frag.appendChild(divSlectedItem);
 
+        // 设置选项的属性
         attr(ulOptions, {
             'class': 'options'
         });
-
-        frag.appendChild(divSlectedItem);
 
         // 遍历选项
         options.forEach(option => {
@@ -122,6 +121,22 @@
         frag.appendChild(ulOptions);
         divSelector.appendChild(frag);
         item.parentElement.appendChild(divSelector);
+
+    };
+
+    // 获取页面的 select 元素
+    //
+    let selector = document.getElementsByTagName('select');
+
+    selector = Array.prototype.slice.call(selector, 0); // 将 DOM 元素转化成数组元素
+
+    // 遍历
+    selector.forEach(item => {
+        
+        if(!item.multiple) {
+            createSimpleSelector(item);
+        }
+
     });
 
 }();

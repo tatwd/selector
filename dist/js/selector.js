@@ -31,11 +31,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return dom;
     };
 
-    var selector = document.getElementsByTagName('select');
-
-    selector = Array.prototype.slice.call(selector, 0); // 将 DOM 元素转化成数组元素
-
-    selector.forEach(function (item) {
+    /**
+     * @desc 创建一个单选下拉框
+     * @param {object} item 
+     */
+    var createSimpleSelector = function createSimpleSelector(item) {
 
         var frag = document.createDocumentFragment();
         var options = [];
@@ -72,12 +72,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         });
 
         divSlectedItem.appendChild(icon);
+        frag.appendChild(divSlectedItem);
 
+        // 设置选项的属性
         attr(ulOptions, {
             'class': 'options'
         });
-
-        frag.appendChild(divSlectedItem);
 
         // 遍历选项
         options.forEach(function (option) {
@@ -125,5 +125,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         frag.appendChild(ulOptions);
         divSelector.appendChild(frag);
         item.parentElement.appendChild(divSelector);
+    };
+
+    // 获取页面的 select 元素
+    //
+    var selector = document.getElementsByTagName('select');
+
+    selector = Array.prototype.slice.call(selector, 0); // 将 DOM 元素转化成数组元素
+
+    // 遍历
+    selector.forEach(function (item) {
+
+        if (!item.multiple) {
+            createSimpleSelector(item);
+        }
     });
 }();
